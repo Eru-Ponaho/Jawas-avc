@@ -15,14 +15,17 @@ int main (){
      take_picture();
       int sum = 0;
       int i;
-      int line;
+      int lineLeft = -54;
+      int lineRight = 54;
       for(i=0, i<320, i++){
-        w = get_pixel(120,i,3);
-        sum = sum + i * w ;
-      if (sum <= line || sum >= line){
-        set_motor(1, 50);
-        // in the opposite direction at 50 % speed .
-        set_motor(2, 50);
-        Sleep(0 ,500000);
-    }
+         w = get_pixel(120,i,3);
+         sum = sum + i * w ;
+         if (sum <= lineLeft || sum >= lineRight){
+            set_motor(1, 50);
+            // in the opposite direction at 50 % speed .
+            set_motor(2, 50);
+            Sleep(0 ,500000);
+         }
+      }
+   }
 return 0;}
