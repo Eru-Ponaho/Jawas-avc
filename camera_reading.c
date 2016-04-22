@@ -4,6 +4,7 @@ extern "C" int init(int d_lev);
 extern "C" int Sleep( int sec , int usec );
 extern "C" int set_motor(int motor , int speed );
 extern "C" int get_pixel(int pixel , int pixel, int pixel);
+extern "C" int take_picture();
 
 int main (){
    // This sets up the RPi hardware and ensures
