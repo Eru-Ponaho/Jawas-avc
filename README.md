@@ -1,12 +1,7 @@
 #Jawas AVC Readme
 
-| Parts  | Cost (Arthur$)  |
-| :------------ |:---------------:| 
-| Analog IR Sensor (medium range) | $25 | 
-| Digital IR Sensor (short range) | $15 |
-| Lever action Whisker push buttons (digital) | $10 |
-| 180◦ servos | $10 |
-| ...      | ... |
+##IP Address: 10.140.41.15
+
 
 ###Week 1 Checklist
 
@@ -65,3 +60,14 @@
 | 3   | Quadrant 1 complete |  | | [Week 3 Checklist](#week-3-checklist) |
 | ...     | ... | ... | ... | ... |
 | 9   | Submit final reports | Final report due | Exams | |
+
+
+
+| Parts  | Cost (Arthur$)  |
+| :------------ |:---------------:| 
+| Analog IR Sensor (medium range) | $25 | 
+| Digital IR Sensor (short range) | $15 |
+| Lever action Whisker push buttons (digital) | $10 |
+| 180◦ servos | $10 |
+| ...      | ... |
+
