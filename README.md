@@ -23,11 +23,11 @@
 ######Software
 - [ ] Kyle – Go through Deacons code, checking for potential errors or bugs
 
-- [ ] -Go through camera code, make sure it is commented. Consider how a camera would move the AVC and when it has varying readings such as half the picture being white for a corner, or the entire picture being white for crossroads, what happens when it hits a dead end
+- [ ] Kyle -Go through camera code, make sure it is commented. Consider how a camera would move the AVC and when it has varying readings such as half the picture being white for a corner, or the entire picture being white for crossroads, what happens when it hits a dead end
 
 - [ ] Deacon – Go through Kyles code, checking for potential errors or bugs
 
-- [ ] -Go through the motor code, making sure it is commented. Consider how it will change if one wheel is mounted in the opposite direction as the other. Setting a variable for the speed which can be changed or effected (later by IR sensors), what the robot will do if it runs into a wall or gate
+- [ ] Deacon -Go through the motor code, making sure it is commented. Consider how it will change if one wheel is mounted in the opposite direction as the other. Setting a variable for the speed which can be changed or effected (later by IR sensors), what the robot will do if it runs into a wall or gate
 
 #####Hardware
 - [ ] Eru – Create a suitable design plan for the AVC with Sian, considering centre of gravity, how it will fit through the maze (approx 15cm’s wide). Plan how you expect us to use IR sensors, where they will be placed to get good readings
