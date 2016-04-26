@@ -34,12 +34,12 @@
 
 ###Week 3 Checklist
 
-- [x] Kyle - Implement the IR sensor, camera , and motor code and get it functioning
-- [x] Deacon - Implement the IR sensor, camera, and motor code and get it functioning
-- [x] Sian - Finalize intial set-up of the AVC, create and print components that is needed in 3d printer
-- [x] Eru - Finalize intial set-up of the AVC, create and print components that is needed in 3d printer
-- [x] Jon - Write week 4 goals, update readme
-- [x] Everyone - Complete quadrant 1, start on quadrant 2
+- [ ] Kyle - Implement the IR sensor, camera , and motor code and get it functioning
+- [ ] Deacon - Implement the IR sensor, camera, and motor code and get it functioning
+- [ ] Sian - Finalize intial set-up of the AVC, create and print components that is needed in 3d printer
+- [ ] Eru - Finalize intial set-up of the AVC, create and print components that is needed in 3d printer
+- [ ] Jon - Write week 4 goals, update readme
+- [ ] Everyone - Complete quadrant 1, start on quadrant 2
 
 
 ###Weekly Progress Checklist
