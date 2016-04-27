@@ -19,3 +19,12 @@ int main (){
      i++;
      }
 return 0;}
+
+
+//
+//TODO: Create a variable for speed, this is so
+//TODO: That we can easily swap the variable for a reading from the IR sensor that
+//TODO: Will be mounted on the front (or elsewhere) which will prevent the AVC from crashing
+//
+//TODO: Add in code that takes readings from an IR sensor and stores them in a variable
+//
