@@ -7,17 +7,31 @@ extern "C" int get_pixel(int pixel , int pixel, int pixel);
 extern "C" int take_picture();
 
 int main (){
+   int i;
    // This sets up the RPi hardware and ensures
    // everything is working correctly
    init(0);
-   // Sets the motor connected to pin 1 to rotate
-   // in one direction at MAX speed .
+   open_screen_stream(); // turns on camera
+   for (i = 0; i < 8; i++)
+    {
+      // set all digital channels as outputs
+      select_IO(i,0);
+      write_digital(i,1);
+    }
    while (true){
-     take_picture();
+      int white = get_pixel(100,56,3); // at 100,56; find what colour the pixel is using method '3'
+      printf("%d\n",white); //prints result of white
+      // draw some line
+      set_pixel(100, 55 ,255,0,0);
+      set_pixel(101, 55 ,255,0,0);
+      set_pixel(102, 55 ,255,0,0);
+      set_pixel(103, 55 ,255,0,0);
+      // display picture
+      update_screen();
       int sum = 0;
       int i;
-      int lineLeft = -54;
-      int lineRight = 54;
+      int lineLeft = -54; // set the margin for the left side of the line
+      int lineRight = 54; // same but right side
       for(i=0, i<320, i++){
          w = get_pixel(120,i,3);
          sum = sum + i * w ;
@@ -29,6 +43,8 @@ int main (){
          }
       }
    }
+   close_screen_stream(); // ends camera stream
+   
 return 0;}
 
 //
