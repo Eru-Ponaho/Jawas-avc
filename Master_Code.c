@@ -39,6 +39,17 @@ int v_right = 0;
 
 int main()
 {
+    //Open gate:
+    //connects to server
+    connect_to_server(130.195.6.196, 22);
+    //sends a message to the connected server
+    send_to_server("Please open the gate");
+    send_to_server("123456");
+    //receives message from the connected server
+    char message[24];
+    message = receive_from_server("my-password"); //this line looks buggy, is it right?
+    //client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c);
+    
     int i;
     init(0);
     // connect camera to the screen
@@ -50,6 +61,7 @@ int main()
       select_IO(i,0);
       write_digital(i,1);
     }
+    
     while(1)
     {
        take_picture();      // take camera shot
