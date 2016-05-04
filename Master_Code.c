@@ -1,5 +1,4 @@
-/*SKELETON CODES FOR AVC */
-/*  A.Roberts, 5 Apr 2016*/
+
 #include <stdio.h>
 
 //#include <pthread.h>
@@ -59,6 +58,14 @@ int main()
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);
             white[i] = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
+            if(white[i] > 70){
+                white[i] = 1;
+            }
+            else{
+                white[i] = 0;
+            }
+            
+        }
             printf("%d\n",white[i]); // print array results
         }
 
@@ -66,17 +73,6 @@ int main()
        // display picture
        update_screen();
 
-       // check motors
-       v_left = 50; //one direction
-       v_right = 50;
-       set_motor(1,v_left);
-       set_motor(2,v_right);
-       Sleep(1,0);
-       v_left = -55; //different direction
-       v_right =-55;
-       set_motor(1,v_left);
-       set_motor(2,v_right);
-       Sleep(1,0);
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
