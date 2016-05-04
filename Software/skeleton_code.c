@@ -54,12 +54,12 @@ int main()
     while(1)
     {
        take_picture();      // take camera shot
-       int white[320];
+       int white[320]; // we made the array 320 because that is the width of pixels
        // draw some line
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);
-            white[i] = get_pixel(i,56,3);
-            printf("%d\n",white[i]);
+            white[i] = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
+            printf("%d\n",white[i]); // print array results
         }
 
 
