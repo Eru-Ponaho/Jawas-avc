@@ -54,12 +54,14 @@ int main()
     while(1)
     {
        take_picture();      // take camera shot
-       int white = get_pixel(100,56,3);
-       printf("%d\n",white);
+       int white[320];
        // draw some line
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);
+            white[i] = get_pixel(i,56,3);
+            printf("%d\n",white[i]);
         }
+
 
        // display picture
        update_screen();
@@ -78,7 +80,7 @@ int main()
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
-       printf("ai=%d av=%d\n",i,av);
+      // printf("ai=%d av=%d\n",i,av);
        }
 
 
