@@ -57,7 +57,7 @@ int main()
        int white = get_pixel(100,56,3);
        printf("%d\n",white);
        // draw some line
-       for(int i = 0, i < 320, i++){
+       for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);
         }
 
