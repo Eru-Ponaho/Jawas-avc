@@ -61,6 +61,13 @@ int main()
        set_pixel(101, 55 ,255,0,0);
        set_pixel(102, 55 ,255,0,0);
        set_pixel(103, 55 ,255,0,0);
+       set_pixel(103, 55 ,255,0,0);
+       set_pixel(103, 55 ,255,0,0);
+       set_pixel(103, 55 ,255,0,0);
+       set_pixel(103, 55 ,255,0,0);
+       set_pixel(103, 55 ,255,0,0);
+       set_pixel(103, 55 ,255,0,0);
+       set_pixel(103, 55 ,255,0,0);
        // display picture
        update_screen();
 
