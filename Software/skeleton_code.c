@@ -60,14 +60,14 @@ int main()
        set_pixel(100, 55 ,255,0,0);
        set_pixel(101, 55 ,255,0,0);
        set_pixel(102, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
-       set_pixel(103, 55 ,255,0,0);
+       set_pixel(104, 55 ,255,0,0);
+       set_pixel(105, 55 ,255,0,0);
+       set_pixel(106, 55 ,255,0,0);
+       set_pixel(107, 55 ,255,0,0);
+       set_pixel(108, 55 ,255,0,0);
+       set_pixel(109, 55 ,255,0,0);
+       set_pixel(110, 55 ,255,0,0);
+       set_pixel(111, 55 ,255,0,0);
        // display picture
        update_screen();
 
