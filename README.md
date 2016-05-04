@@ -4,24 +4,28 @@
 
 ###Week 3 Checklist
 
-- [ ] Kyle - Implement the IR sensor, camera , and motor code and get it functioning
-- [ ] Deacon - Implement the IR sensor, camera, and motor code and get it functioning
-- [ ] Sian - Finalize intial set-up of the AVC, create and print components that is needed in 3d printer
-- [ ] Eru - Finalize intial set-up of the AVC, create and print components that is needed in 3d printer
+- [ ] Kyle - Implement the camera  and motor code and have the AVC follow the line
+- [ ] Kyle - Implement code to have AVC wirelessly connect to the gate and open it
+- [ ] Deacon - Implement the camera and motor code and have the AVC follow the line
+- [ ] Deacon - Implement code to have AVC wirelessly connect to the gate and open it
+- [ ] Sian - Finalize intial set-up of the AVC, 
+- [ ] Sian -Create and print components that is needed in 3d printer
+- [ ] Eru - Add a short range IR sensor to the AVC, update wiki with information about it
+- [ ] Eru -Create and print components that is needed in 3d printer
 - [ ] Jon - Write week 4 goals, update readme
 - [ ] Everyone - Complete quadrant 1, start on quadrant 2
 
+###Week 4 Checklist
 
-###Weekly Progress Checklist
-- [ ] How has each team member performed against their goal set last week?
-- [ ] Have you set a goal for each team member for this/next week?
-- [ ] Has the team discussed which tasks are the most important or urgent?
-- [ ] Do any team members need more help to complete their assigned task(s)?
-- [ ] Have you updated the task list on Github this week?
-- [ ] Are all relevant code, bot photos and design files on the team Github?
-- [ ] Have you noted which members attended labs and team meetings?
-- [ ] Have team members shared their draft report sections (if the team decided they wanted to do that)?
-- [ ] Are there any tasks that need to be done for progress tp be made that have NOT been assigned to a team member?
+- [ ] Kyle - Work further on the line following code, getting past the challenges that it faces (crossroads/ dead ends)
+- [ ] Deacon - Create a framework for the medium range IR sesnors
+- [ ] Sian - Design where our sensors will be placed, how many we have, what they all do
+- [ ] Eru - Add medium range sensors, update wiki with information about them
+- [ ] Jon - Write week 4 goals, update readme
+- [ ] Everyone - Start / complete quadrant 2
+- [ ] Everyone - Look through the code written by Kyle and Deacon, add comments if you see errors or potential problems
+
+
 - 
 | Week  | Team Objective(s)  | Items Due | Conflicting Committments | Tasks |
 | :------------ |:---------------:| ------: | ------: | ------: |
@@ -55,13 +59,13 @@
 ###Week 2 Checklist
 
 ######Software
-- [ ] Kyle – Go through Deacons code, checking for potential errors or bugs
+- [x] Kyle - Was not necessary – Go through Deacons code, checking for potential errors or bugs
 
 - [x] Kyle -Go through camera code, make sure it is commented. Consider how a camera would move the AVC and when it has varying readings such as half the picture being white for a corner, or the entire picture being white for crossroads, what happens when it hits a dead end
 
-- [ ] Deacon – Go through Kyles code, checking for potential errors or bugs
+- [x] Deacon – Go through Kyles code, checking for potential errors or bugs
 
-- [x] Deacon -Go through the motor code, making sure it is commented. Consider how it will change if one wheel is mounted in the opposite direction as the other. Setting a variable for the speed which can be changed or effected (later by IR sensors), what the robot will do if it runs into a wall or gate
+- [x] Deacon - Done by Kyle -Go through the motor code, making sure it is commented. Consider how it will change if one wheel is mounted in the opposite direction as the other. Setting a variable for the speed which can be changed or effected (later by IR sensors), what the robot will do if it runs into a wall or gate 
 
 #####Hardware
 - [x] Eru – Create a suitable design plan for the AVC with Sian, considering centre of gravity, how it will fit through the maze (approx 15cm’s wide). Plan how you expect us to use IR sensors, where they will be placed to get good readings
@@ -70,4 +74,15 @@
 
 ######Paperwork
 - [x] Jon - Update the ReadMe, set week 3 goals
+- 
+###Weekl 2 Progress Checklist
+- [x] How has each team member performed against their goal set last week?
+- [x] Have you set a goal for each team member for this/next week?
+- [x] Has the team discussed which tasks are the most important or urgent?
+- [x] Do any team members need more help to complete their assigned task(s)?
+- [x] Have you updated the task list on Github this week?
+- [x] Are all relevant code, bot photos and design files on the team Github?
+- [x] Have you noted which members attended labs and team meetings?
+- [x] Have team members shared their draft report sections (if the team decided they wanted to do that)?
+- [x] Are there any tasks that need to be done for progress tp be made that have NOT been assigned to a team member?
 
