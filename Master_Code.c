@@ -58,28 +58,23 @@ int main()
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);
             white[i] = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
-            if(white[i] > 70){
+            if(white[i] > 70){ // change 70 to actual white line value later
                 white[i] = 1;
             }
             else{
                 white[i] = 0;
             }
-            
-        }
             printf("%d\n",white[i]); // print array results
         }
-
-
+            
        // display picture
        update_screen();
-
+       Sleep(1,0);
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
       // printf("ai=%d av=%d\n",i,av);
        }
-
-
      }
 
    // terminate hardware
