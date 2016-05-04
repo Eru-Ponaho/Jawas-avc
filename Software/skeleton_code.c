@@ -57,17 +57,10 @@ int main()
        int white = get_pixel(100,56,3);
        printf("%d\n",white);
        // draw some line
-       set_pixel(100, 55 ,255,0,0);
-       set_pixel(101, 55 ,255,0,0);
-       set_pixel(102, 55 ,255,0,0);
-       set_pixel(104, 55 ,255,0,0);
-       set_pixel(105, 55 ,255,0,0);
-       set_pixel(106, 55 ,255,0,0);
-       set_pixel(107, 55 ,255,0,0);
-       set_pixel(108, 55 ,255,0,0);
-       set_pixel(109, 55 ,255,0,0);
-       set_pixel(110, 55 ,255,0,0);
-       set_pixel(111, 55 ,255,0,0);
+       for(int i = 0, i < 320, i++){
+            set_pixel(i, 55 ,255,0,0);
+        }
+
        // display picture
        update_screen();
 
