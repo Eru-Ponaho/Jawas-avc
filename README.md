@@ -70,12 +70,14 @@
 #####Hardware
 - [x] Eru – Create a suitable design plan for the AVC with Sian, considering centre of gravity, how it will fit through the maze (approx 15cm’s wide). Plan how you expect us to use IR sensors, where they will be placed to get good readings
 
-- [ ] Sian – Familiarize with CAD and 3d printing, create and work with Eru on design plans, plan what you think you will need to 3d print
+- [ ] Sian (Absent, unsure of progress) – Familiarize with CAD and 3d printing, create and work with Eru on design plans, plan what you think you will need to 3d print
 
 ######Paperwork
+
 - [x] Jon - Update the ReadMe, set week 3 goals
-- 
-###Weekl 2 Progress Checklist
+
+
+###Week 2 Progress Checklist
 - [x] How has each team member performed against their goal set last week?
 - [x] Have you set a goal for each team member for this/next week?
 - [x] Has the team discussed which tasks are the most important or urgent?
