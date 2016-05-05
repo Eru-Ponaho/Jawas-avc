@@ -46,7 +46,7 @@ int main()
     //send_to_server("123456");
     //receives message from the connected server
     char message[24];
-    receive_from_server(message); //this line looks buggy, is it right?
+    receive_from_server(message); //this line looks buggy, is it right? Not anymore
     send_to_server(message);
     
     int i;
