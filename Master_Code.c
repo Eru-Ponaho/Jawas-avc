@@ -1,5 +1,3 @@
-/*SKELETON CODES FOR AVC */
-/*  A.Roberts, 5 Apr 2016*/
 #include <stdio.h>
 
 //#include <pthread.h>
@@ -40,6 +38,17 @@ int v_right = 0;
 
 int main()
 {
+    //Open gate:
+    //connects to server
+    connect_to_server(130.195.6.196, 1024);
+    //sends a message to the connected server
+    send_to_server("Please");
+    //send_to_server("123456");
+    //receives message from the connected server
+    char message[24];
+    message = receive_from_server("my-password"); //this line looks buggy, is it right?
+    send_to_server(message);
+    
     int i;
     init(0);
     // connect camera to the screen
@@ -59,31 +68,23 @@ int main()
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);
             white[i] = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
+            if(white[i] > 70){ // change 70 to actual white line value later
+                white[i] = 1;
+            }
+            else{
+                white[i] = 0;
+            }
             printf("%d\n",white[i]); // print array results
         }
-
-
+            
        // display picture
        update_screen();
-
-       // check motors
-       v_left = 50; //one direction
-       v_right = 50;
-       set_motor(1,v_left);
-       set_motor(2,v_right);
-       Sleep(1,0);
-       v_left = -55; //different direction
-       v_right =-55;
-       set_motor(1,v_left);
-       set_motor(2,v_right);
        Sleep(1,0);
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
       // printf("ai=%d av=%d\n",i,av);
        }
-
-
      }
 
    // terminate hardware
