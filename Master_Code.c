@@ -50,6 +50,8 @@ int main()
     send_to_server(message);
     
     int i;
+    int baseSpeed = 20;
+    int k = 4; //random constant
     init(0);
     // connect camera to the screen
     open_screen_stream();
@@ -67,8 +69,8 @@ int main()
        // draw some line
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);
-            white[i] = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
-            if(white[i] > 70){ // change 70 to actual white line value later
+            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
+            if(value > 70){ // change 70 to actual white line value later
                 white[i] = 1;
             }
             else{
@@ -76,8 +78,19 @@ int main()
             }
             printf("%d\n",white[i]); // print array results
         }
-        //process the data collected os far:
+        
+        //process the data collected so far:
         //but first create an array counting from -170 to 170
+        int e=0;
+        for(int i=0;i<320;i++){
+            a[i] = i - 160;
+            e += white[i]*a[i];
+        }
+     int LM = baseSpeed+k*e;
+     int RM = baseSpeed-k*e;
+     set_motor(1, LM); 
+     set_motor(2, RM); 
+     
         
             
        // display picture
