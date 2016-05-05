@@ -76,6 +76,9 @@ int main()
             }
             printf("%d\n",white[i]); // print array results
         }
+        //process the data collected os far:
+        //but first create an array counting from -170 to 170
+        
             
        // display picture
        update_screen();
