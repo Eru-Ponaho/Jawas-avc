@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 //#include <pthread.h>
@@ -39,7 +38,6 @@ int v_right = 0;
 
 int main()
 {
-    init(1);
     //Open gate:
     //connects to server
     connect_to_server(130.195.6.196, 1024);
@@ -50,7 +48,7 @@ int main()
     char message[24];
     message = receive_from_server("my-password"); //this line looks buggy, is it right?
     send_to_server(message);
-
+    
     int i;
     init(0);
     // connect camera to the screen
@@ -62,7 +60,6 @@ int main()
       select_IO(i,0);
       write_digital(i,1);
     }
-    
     while(1)
     {
        take_picture();      // take camera shot
