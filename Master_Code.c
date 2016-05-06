@@ -38,20 +38,21 @@ int v_right = 0;
 
 int main()
 {
+
     //Open gate:
     //connects to server
-    connect_to_server("130.195.6.196", 1024);
-    //sends a message to the connected server
-    send_to_server("Please");
+   // connect_to_server("130.195.6.196", 1024);
+   //sends a message to the connected server
+    //send_to_server("Please");
     //send_to_server("123456");
     //receives message from the connected server
-    char message[24];
-    receive_from_server(message); //this line looks buggy, is it right? Not anymore
-    send_to_server(message);
+    //char message[24];
+    //receive_from_server(message); //this line looks buggy, is it right?
+    //send_to_server(message);
     
     int i;
-    int baseSpeed = 20;
-    int k = 4; //random constant
+    int baseSpeed = 35;
+    float k =0.1; //random constant
     init(0);
     // connect camera to the screen
     open_screen_stream();
@@ -65,44 +66,48 @@ int main()
     while(1)
     {
        take_picture();      // take camera shot
-       int white[320]; // we made the array 320 because that is the width of pixels
+       int white[320];
+       int value;
+       // we made the array 320 because that is the width of pixels
        // draw some line
        for(int i = 0; i < 320; i++){
-            set_pixel(i, 55 ,255,0,0);
-            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
-            if(value > 70){ // change 70 to actual white line value later
+            set_pixel(i, 55 ,255,0,0);//redline
+            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
+            if(value > 100){ // change 70 to actual white line value later
                 white[i] = 1;
             }
             else{
                 white[i] = 0;
             }
-            printf("%d\n",white[i]); // print array results
+            //printf("%d\n",white[i]); // print array results
         }
-        
+         
         //process the data collected so far:
         //but first create an array counting from -170 to 170
         int e=0;
+        int sum = 0;
         for(int i=0;i<320;i++){
-            a[i] = i - 160;
-            e += white[i]*a[i];
+            sum  = sum + (i - 160)*white[i];
         }
-     int LM = baseSpeed+k*e;
-     int RM = baseSpeed-k*e;
+ 
+     e = (sum/20)*k;   
+     int LM = baseSpeed+e;
+     int RM = baseSpeed+(-1*e);
+     printf("%d\n",LM);
      set_motor(1, LM); 
      set_motor(2, RM); 
-     
-        
-            
+
+
+
        // display picture
        update_screen();
-       Sleep(1,0);
+       Sleep(0,200000);
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
       // printf("ai=%d av=%d\n",i,av);
        }
      }
-
    // terminate hardware
     close_screen_stream();
     set_motor(1,0);
@@ -112,3 +117,4 @@ int main()
 
 
 }
+
