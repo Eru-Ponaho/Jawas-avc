@@ -52,7 +52,7 @@ int main()
     
     int i;
     int baseSpeed = 35;
-    float k =0.1; //random constant
+    float kp =0.1; // 'P' constant for PID
     init(0);
     // connect camera to the screen
     open_screen_stream();
@@ -73,7 +73,7 @@ int main()
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);//redline
             value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
-            if(value > 100){ // change 70 to actual white line value later
+            if(value > 100){ // This number (100) is the threshold between black and white
                 white[i] = 1;
             }
             else{
@@ -83,14 +83,13 @@ int main()
         }
          
         //process the data collected so far:
-        //but first create an array counting from -170 to 170
         int e=0;
         int sum = 0;
         for(int i=0;i<320;i++){
             sum  = sum + (i - 160)*white[i];
         }
  
-     e = (sum/20)*k;   
+     e = (sum/20)*kp;            
      int LM = baseSpeed+e;
      int RM = baseSpeed+(-1*e);
      printf("%d\n",LM);
