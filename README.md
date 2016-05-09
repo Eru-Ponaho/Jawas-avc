@@ -4,16 +4,21 @@
 
 ###Week 3 Checklist
 
-- [ ] Kyle - Implement the camera  and motor code and have the AVC follow the line
-- [ ] Kyle - Implement code to have AVC wirelessly connect to the gate and open it
-- [ ] Deacon - Implement the camera and motor code and have the AVC follow the line
-- [ ] Deacon - Implement code to have AVC wirelessly connect to the gate and open it
-- [ ] Sian - Finalize intial set-up of the AVC, 
-- [ ] Sian -Create and print components that is needed in 3d printer
+- [x] Kyle - Implement the camera  and motor code and have the AVC follow the line
+- [x] Kyle - Implement code to have AVC wirelessly connect to the gate and open it
+- [x] Deacon - Implement the camera and motor code and have the AVC follow the line
+- [x] Deacon - Implement code to have AVC wirelessly connect to the gate and open it
+- [x] Sian - Finalize intial set-up of the AVC
+- [x] Everyone - Complete quadrant 1, start on quadrant 2
+
+- [ ] Deacon - Get P and D variables working, add in I variable
+- [ ] Kyle - Work with Deacon, implement code and fine tune after ACV hardware design is finalized (weight, COG has changed, drag eliminated)
+- [ ] Sian - Create and print components that is needed in 3d printer (battery guard, rear wheel)
 - [ ] Eru - Add a short range IR sensor to the AVC, update wiki with information about it
-- [ ] Eru -Create and print components that is needed in 3d printer
+- [ ] Eru - Cut the base board, finalize AVC set up
 - [ ] Jon - Write week 4 goals, update readme
-- [ ] Everyone - Complete quadrant 1, start on quadrant 2
+- [ ] Everyone - Complete Quadrant 3, start on quadrant 3
+
 
 ###Week 4 Checklist
 
@@ -21,7 +26,7 @@
 - [ ] Deacon - Create a framework for the medium range IR sesnors
 - [ ] Sian - Design where our sensors will be placed, how many we have, what they all do
 - [ ] Eru - Add medium range sensors, update wiki with information about them
-- [ ] Jon - Write week 4 goals, update readme
+- [ ] Jon - Write week 5 goals, update readme
 - [ ] Everyone - Start / complete quadrant 2
 - [ ] Everyone - Look through the code written by Kyle and Deacon, add comments if you see errors or potential problems
 
@@ -70,7 +75,7 @@
 #####Hardware
 - [x] Eru – Create a suitable design plan for the AVC with Sian, considering centre of gravity, how it will fit through the maze (approx 15cm’s wide). Plan how you expect us to use IR sensors, where they will be placed to get good readings
 
-- [ ] Sian (Absent, unsure of progress) – Familiarize with CAD and 3d printing, create and work with Eru on design plans, plan what you think you will need to 3d print
+- [x] Sian – Familiarize with CAD and 3d printing, create and work with Eru on design plans, plan what you think you will need to 3d print
 
 ######Paperwork
 
