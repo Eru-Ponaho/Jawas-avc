@@ -50,14 +50,13 @@ int main()
     //receive_from_server(message); //this line looks buggy, is it right?
     //send_to_server(message);
     
-    int i;
     int baseSpeed = 35;
     float kp =0.1; // 'P' constant for PID
     init(0);
     // connect camera to the screen
     open_screen_stream();
     // set all didgital outputs to +5V
-    for (i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++)
     {
       // set all digital channels as outputs
       select_IO(i,0);
