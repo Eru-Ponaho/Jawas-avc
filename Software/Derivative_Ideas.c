@@ -45,7 +45,7 @@
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Derivative below
         //
-        int previous_error = 0;    //-This setting to zero might have to be put at the very start of the program, because I 
+        int previous_error;    //-This setting to zero might have to be put at the very start of the program, because I 
                                    // think as it is now, the previous error will always be zero when the wile loop goes round.
         int current_error = 0;    
         int derivative_signal; 
