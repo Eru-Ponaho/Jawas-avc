@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 
 //#include <pthread.h>
@@ -41,8 +42,8 @@ int main()
 
     //Open gate:
     //connects to server
-   // connect_to_server("130.195.6.196", 1024);
-   //sends a message to the connected server
+    //connect_to_server("130.195.6.196", 1024);
+    //sends a message to the connected server
     //send_to_server("Please");
     //send_to_server("123456");
     //receives message from the connected server
@@ -51,8 +52,8 @@ int main()
     //send_to_server(message);
     
     int i;
-    int baseSpeed = 35;
-    float kp =0.1; // 'P' constant for PID
+    int baseSpeed = 39;
+    float k =0.0045; //random constant
     init(0);
     // connect camera to the screen
     open_screen_stream();
@@ -72,8 +73,8 @@ int main()
        // draw some line
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);//redline
-            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
-            if(value > 100){ // This number (100) is the threshold between black and white
+            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
+            if(value > 100){ // change 70 to actual white line value later
                 white[i] = 1;
             }
             else{
@@ -81,32 +82,34 @@ int main()
             }
             //printf("%d\n",white[i]); // print array results
         }
-         
+        
         //process the data collected so far:
+        //but first create an array counting from -170 to 170
         int e=0;
-        int sum = 0;
+	int sum = 0;
         for(int i=0;i<320;i++){
             sum  = sum + (i - 160)*white[i];
         }
- 
-     e = (sum/20)*kp;            
+
+     e = sum*k;   
      int LM = baseSpeed+e;
      int RM = baseSpeed+(-1*e);
      printf("%d\n",LM);
      set_motor(1, LM); 
      set_motor(2, RM); 
-
-
-
+     
+        
+            
        // display picture
        update_screen();
-       Sleep(0,200000);
+       Sleep(0,100000);
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
       // printf("ai=%d av=%d\n",i,av);
        }
      }
+
    // terminate hardware
     close_screen_stream();
     set_motor(1,0);
@@ -116,4 +119,3 @@ int main()
 
 
 }
-
