@@ -91,7 +91,7 @@ int main()
             sum  = sum + (i - 160)*white[i];
         }
 
-	int previous_error;    //-This setting to zero might have to be put at the very start of the program, because I 
+	int previous_error;    //-We removed the initialisation of this to 0 because it would be set to 0 every time it looped.
                                    // think as it is now, the previous error will always be zero when the wile loop goes round.
         int current_error = 0;    
         int derivative_signal; 
@@ -100,7 +100,7 @@ int main()
             error = (i - 160)*white[i]; // Maybe we can combine these in some way?
             current_error += error;
         }
-        //Sleep(0,100000);                 // This could be a problem?
+        //Sleep(0,100000);                 // This could be a problem - removed because we already have a sleep command
         derivative_signal = (current_error-previous_error/0.1)*kd; //I think this si the equivalent of 'e = (sum/20)*kp;' below
         previous_error = current_error;
         printf("Derivative signal is: %d", derivative_signal );
