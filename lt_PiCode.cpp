@@ -51,6 +51,7 @@ int main()
     //receive_from_server(message); //this line looks buggy, is it right?
     //send_to_server(message);
     
+    int i = 0; // Re-added this because didnt seem to complie without it
     int baseSpeed = 35;
     float kp = 0.03; //random constant
     float kd = 0;
