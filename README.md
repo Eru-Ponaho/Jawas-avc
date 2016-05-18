@@ -1,5 +1,7 @@
 #Jawas AVC Readme
 
+#Check the wiki for weekly checklists, I am unable to get this to work with the new tasks
+
 ##IP Address: 10.140.137.184
 
 ###Week 3 Checklist
