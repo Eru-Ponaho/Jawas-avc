@@ -32,7 +32,8 @@ extern "C" int set_PWM(int chan, int value);
 extern "C" int connect_to_server( char server_addr[15],int port);
 extern "C" int send_to_server(char message[24]);
 extern "C" int receive_from_server(char message[24]);
-
+public method crossRoad();
+public method deadEnd();
 
 int v_left = 0;
 int v_right = 0;
@@ -95,8 +96,17 @@ int main()
      int LM = baseSpeed+e;
      int RM = baseSpeed+(-1*e);
      printf("%d\n",LM);
-     set_motor(1, LM); 
-     set_motor(2, RM); 
+     if(allwhite){
+     	crossRoad();
+     }
+     else if(allblack){
+     	deadEnd()
+     }
+     else{
+     	set_motor(1, LM); 
+     	set_motor(2, RM); 	
+     }
+     
      
         
             
@@ -118,4 +128,21 @@ int main()
     return 0;
 
 
+}
+
+public void crossRoad(){
+	set_motor(1,-20);
+	set_motor(2,-20);
+	Sleep(0,100000);
+	set_motor(1,-20);
+	set_motor(2,20);
+	Sleep(0,100000);
+}
+public void deadEnd(){
+	set_motor(1,-60);
+	set_motor(2, 60);
+	Sleep(0,200000);
+	set_motor(1,-20);
+	set_motor(2,-20);
+	Sleep(0,100000);
 }
