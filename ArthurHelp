@@ -1,0 +1,18 @@
+Every time a white pixel is found in this code:
+
+nwp = 0;
+value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
+            if(value > 100){ // change 70 to actual white line value later
+                white[i] = 1;
+                nwp++;
+            }
+            else{
+                white[i] = 0;
+            }
+            
+if(nwp!= 0)
+error/nwp;
+else{
+reverse motors
+            
+  Increase a variable "NumberOfWhitePixels
