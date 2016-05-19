@@ -100,7 +100,7 @@ int main()
      	crossRoad();
      }
      else if(allblack){
-     	deadEnd()
+     	deadEnd();
      }
      else{
      	set_motor(1, LM); 
