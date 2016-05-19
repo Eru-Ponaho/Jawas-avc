@@ -32,9 +32,14 @@ extern "C" int connect_to_server( char server_addr[15],int port);
 extern "C" int send_to_server(char message[24]);
 extern "C" int receive_from_server(char message[24]);
 
+void deadEnd();
+void crossRoad();
+
 
 int v_left = 0;
 int v_right = 0;
+int LM;
+int RM;
 
 int main()
 {
@@ -94,16 +99,23 @@ int main()
         }
      if(nwp!=0){
        sumOfError =  sumOfError/nwp;
+       proportionalSignal = sumOfError*kp;
+       printf("sum of error*kp %d\n", sumOfError*kp);  
+       LM = baseSpeed + (proportionalSignal);
+       RM = baseSpeed + (-1*(proportionalSignal));
+       printf("%d\n",LM);
+       set_motor(1, LM); 
+       set_motor(2, RM); 
      }
- 
-     proportionalSignal = sumOfError*kp;
+     else if(nwp==0){
+     	deadEnd();
+     }
+     else if(nwp > 200){
+     	crossRoad();
+     }
+     
      //printf("%d\n",proportionalSignal);
-     printf("sum of error*kp %d\n", sumOfError*kp);  
-     int LM = baseSpeed + (proportionalSignal);
-     int RM = baseSpeed + (-1*(proportionalSignal));
-     printf("%d\n",LM);
-     set_motor(1, LM); 
-     set_motor(2, RM); 
+     
 
 
 
@@ -127,30 +139,20 @@ int main()
 }
 
 // below is hardcode
-if(allwhite){
-     	crossRoad();
-     }
-     else if(allblack){
-     	deadEnd();
-     }
-     else{
-     	set_motor(1, LM); 
-     	set_motor(2, RM); 	
-     }
 
-public void crossRoad(){
-	set_motor(1,-20);
-	set_motor(2,-20);
-	Sleep(0,100000);
-	set_motor(1,-20);
-	set_motor(2,20);
-	Sleep(0,100000);
-}
-public void deadEnd(){
+void crossRoad(){
 	set_motor(1,-60);
-	set_motor(2, 60);
-	Sleep(0,200000);
-	set_motor(1,-20);
+	set_motor(2,-60);
+	Sleep(1,00000);
+	set_motor(1,-60);
+	set_motor(2,60);
+	Sleep(1,100000);
+}
+void deadEnd(){
+	set_motor(1,-40);
+	set_motor(2,-40);
+	Sleep(1,0);
+	set_motor(1,40);
 	set_motor(2,-20);
-	Sleep(0,100000);
+	Sleep(0,10000000);
 }
