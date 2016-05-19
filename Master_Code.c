@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 //#include <pthread.h>
@@ -32,8 +31,7 @@ extern "C" int set_PWM(int chan, int value);
 extern "C" int connect_to_server( char server_addr[15],int port);
 extern "C" int send_to_server(char message[24]);
 extern "C" int receive_from_server(char message[24]);
-public method crossRoad();
-public method deadEnd();
+
 
 int v_left = 0;
 int v_right = 0;
@@ -43,8 +41,8 @@ int main()
 
     //Open gate:
     //connects to server
-    //connect_to_server("130.195.6.196", 1024);
-    //sends a message to the connected server
+   // connect_to_server("130.195.6.196", 1024);
+   //sends a message to the connected server
     //send_to_server("Please");
     //send_to_server("123456");
     //receives message from the connected server
@@ -53,8 +51,8 @@ int main()
     //send_to_server(message);
     
     int i;
-    int baseSpeed = 39;
-    float k =0.0045; //random constant
+    int baseSpeed = 32;
+    float kp = 0.4; //p constant
     init(0);
     // connect camera to the screen
     open_screen_stream();
@@ -67,6 +65,7 @@ int main()
     }
     while(1)
     {
+       int nwp = 0;
        take_picture();      // take camera shot
        int white[320];
        int value;
@@ -74,42 +73,40 @@ int main()
        // draw some line
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);//redline
-            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its location based on ' i '.
+            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
             if(value > 100){ // change 70 to actual white line value later
                 white[i] = 1;
+                nwp++;
             }
             else{
                 white[i] = 0;
             }
             //printf("%d\n",white[i]); // print array results
         }
-        
+         
+ 
         //process the data collected so far:
-        //but first create an array counting from -170 to 170
-        int e=0;
-	int sum = 0;
+        //
+        int proportionalSignal = 0;
+        int sumOfError = 0;
         for(int i=0;i<320;i++){
-            sum  = sum + (i - 160)*white[i];
+            sumOfError  = sumOfError + (i - 160)*white[i];
         }
-
-     e = sum*k;   
-     int LM = baseSpeed+e;
-     int RM = baseSpeed+(-1*e);
+     if(nwp!=0){
+       sumOfError =  sumOfError/nwp;
+     }
+ 
+     proportionalSignal = sumOfError*kp;
+     //printf("%d\n",proportionalSignal);
+     printf("sum of error*kp %d\n", sumOfError*kp);  
+     int LM = baseSpeed + (proportionalSignal);
+     int RM = baseSpeed + (-1*(proportionalSignal));
      printf("%d\n",LM);
-     if(allwhite){
-     	crossRoad();
-     }
-     else if(allblack){
-     	deadEnd();
-     }
-     else{
-     	set_motor(1, LM); 
-     	set_motor(2, RM); 	
-     }
-     
-     
-        
-            
+     set_motor(1, LM); 
+     set_motor(2, RM); 
+
+
+
        // display picture
        update_screen();
        Sleep(0,100000);
@@ -119,7 +116,6 @@ int main()
       // printf("ai=%d av=%d\n",i,av);
        }
      }
-
    // terminate hardware
     close_screen_stream();
     set_motor(1,0);
@@ -129,6 +125,18 @@ int main()
 
 
 }
+
+// below is hardcode
+if(allwhite){
+     	crossRoad();
+     }
+     else if(allblack){
+     	deadEnd();
+     }
+     else{
+     	set_motor(1, LM); 
+     	set_motor(2, RM); 	
+     }
 
 public void crossRoad(){
 	set_motor(1,-20);
