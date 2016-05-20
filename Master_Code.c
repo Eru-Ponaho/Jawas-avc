@@ -65,11 +65,11 @@ int main()
       select_IO(i,0);
       write_digital(i,1);
     }
-    while(1)
+    while(1) // keep looping
     {
-       int nwp = 0;
+       int nwp = 0; // keeps count of the number of white pixels in the picture taken
        take_picture();      // take camera shot
-       int white[320];
+       int white[320]; // array for knowing which pixel is white or black.
        int value;
        // we made the array 320 because that is the width of pixels
        // draw some line
@@ -94,7 +94,7 @@ int main()
         for(int i=0;i<320;i++){
             sumOfError  = sumOfError + (i - 160)*white[i];
         }
-     if(nwp!=0&&nwp<=250){
+     if(nwp!=0&&nwp<=250){ // if it detects the line, the do the normal PID code
        sumOfError =  sumOfError/nwp;
        proportionalSignal = sumOfError*kp;
        printf("sum of error*kp %d\n", sumOfError*kp);  
@@ -104,11 +104,11 @@ int main()
        set_motor(1, LM); 
        set_motor(2, RM); 
      }
-     else if(nwp==0){
-     	deadEnd();
+     else if(nwp==0){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
+     	deadEnd(); 
      }
-     else if(nwp > 200){
-     	crossRoad();
+     else if(nwp > 200){ // crossroad condition
+     	crossRoad(); // might not need this anymore.
      }
        // display picture
        update_screen();
@@ -144,25 +144,22 @@ void deadEnd(){
         //set_motor(2,0);
         //Sleep(0,500000);
         //checkLine();
-        if (checkLine()){
+        if (checkLine()){ // it calls the checkLine() method and if it returns true, turn left. If it isnt, then proceed to normal PID
 		set_motor(1,45); 
        		set_motor(2,-45);
                 Sleep(1,00000);
 	}
 }
 bool checkLine(){
-	int valueForCheck = 0;
-        int nwpForCheck = 0;
+	int valueForCheck = 0; // intialise value
+        int nwpForCheck = 0; // intialise number of pixels of check after reversing.
         take_picture();
-       // we made the array 320 because that is the width of pixels
-       // draw some line
-       for(int i = 0; i < 320; i++){
-            set_pixel(i, 55 ,255,0,0);//redline
-            valueForCheck = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
-            if(valueForCheck > 100){ // change 70 to actual white line value later
+       for(int i = 0; i < 320; i++){ //320 because its the camera pixel width
+            set_pixel(i, 55 ,255,0,0); //redline
+            valueForCheck = get_pixel(i,56,3); //set values of pixel
+            if(valueForCheck > 100){  //checks for how many white pixels there are in its current position (after reversing)
                  nwpForCheck++;
             }
-            //printf("%d\n",white[i]); // print array results
         }
 	if(nwpForCheck > 200){
 		return true;
