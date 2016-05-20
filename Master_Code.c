@@ -32,14 +32,12 @@ extern "C" int connect_to_server( char server_addr[15],int port);
 extern "C" int send_to_server(char message[24]);
 extern "C" int receive_from_server(char message[24]);
 
-void deadEnd();
+int reverseSpeed = -45;
+int LM = 0;
+int RM = 0;
 void crossRoad();
-
-
-int v_left = 0;
-int v_right = 0;
-int LM;
-int RM;
+void deadEnd();
+bool checkLine();
 
 int main()
 {
@@ -54,10 +52,9 @@ int main()
     //char message[24];
     //receive_from_server(message); //this line looks buggy, is it right?
     //send_to_server(message);
-    
     int i;
-    int baseSpeed = 32;
-    float kp = 0.4; //p constant
+    int baseSpeed = 29;
+    float kp = 0.3; //p constant
     init(0);
     // connect camera to the screen
     open_screen_stream();
@@ -79,7 +76,7 @@ int main()
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);//redline
             value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
-            if(value > 100){ // change 70 to actual white line value later
+            if(value > 110){ // change 70 to actual white line value later
                 white[i] = 1;
                 nwp++;
             }
@@ -97,7 +94,7 @@ int main()
         for(int i=0;i<320;i++){
             sumOfError  = sumOfError + (i - 160)*white[i];
         }
-     if(nwp!=0){
+     if(nwp!=0&&nwp<=250){
        sumOfError =  sumOfError/nwp;
        proportionalSignal = sumOfError*kp;
        printf("sum of error*kp %d\n", sumOfError*kp);  
@@ -113,15 +110,9 @@ int main()
      else if(nwp > 200){
      	crossRoad();
      }
-     
-     //printf("%d\n",proportionalSignal);
-     
-
-
-
        // display picture
        update_screen();
-       Sleep(0,100000);
+       Sleep(0,80000);
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
@@ -137,22 +128,46 @@ int main()
 
 
 }
-
-// below is hardcode
-
 void crossRoad(){
-	set_motor(1,-60);
-	set_motor(2,-60);
-	Sleep(1,00000);
-	set_motor(1,-60);
-	set_motor(2,60);
-	Sleep(1,100000);
+	//set_motor(1,-35);
+	//set_motor(2,-35);
+	//Sleep(0,500000);
+	//set_motor(1,45);
+	//set_motor(2,-45);
+	//Sleep(1,000000);
 }
 void deadEnd(){
-	set_motor(1,-40);
-	set_motor(2,-40);
-	Sleep(1,0);
-	set_motor(1,40);
-	set_motor(2,-20);
-	Sleep(0,10000000);
+	set_motor(1,reverseSpeed);
+	set_motor(2,reverseSpeed);
+	Sleep(0,500000);
+        //set_motor(1,0);
+        //set_motor(2,0);
+        //Sleep(0,500000);
+        //checkLine();
+        if (checkLine()){
+		set_motor(1,45); 
+       		set_motor(2,-45);
+                Sleep(1,00000);
+	}
+}
+bool checkLine(){
+	int valueForCheck = 0;
+        int nwpForCheck = 0;
+        take_picture();
+       // we made the array 320 because that is the width of pixels
+       // draw some line
+       for(int i = 0; i < 320; i++){
+            set_pixel(i, 55 ,255,0,0);//redline
+            valueForCheck = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
+            if(valueForCheck > 100){ // change 70 to actual white line value later
+                 nwpForCheck++;
+            }
+            //printf("%d\n",white[i]); // print array results
+        }
+	if(nwpForCheck > 200){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
