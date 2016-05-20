@@ -19,5 +19,5 @@ reverse motors
 
 tutor help:
 to differentiate between crossroad and just losing the line;
-try this, if all pixels are black, reverse, and if it sees white along the whole screen turn left.
+try this after it reverses, if all pixels are black, reverse, and if it sees white along the whole screen turn left.
 but if its not white accross the whole screen, do PID
