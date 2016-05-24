@@ -90,7 +90,7 @@ int main()
         //process the data collected so far:
         //
         int proportionalSignal = 0;
-        int sumOfError = 0;
+        int sumOfError = 0;f
         for(int i=0;i<320;i++){
             sumOfError  = sumOfError + (i - 160)*white[i];
         }
