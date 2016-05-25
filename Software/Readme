@@ -3,3 +3,6 @@ JAWAS
 Software stuff
 
 ip address is 10.140.148.78 atm
+
+Try changing threshold for white, Kp, and camera angle.
+Increasing kp makes it turn more strongly, decreasing it makes it turn less - can't do sharp turns.
