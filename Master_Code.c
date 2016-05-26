@@ -48,6 +48,10 @@ double lastError;
 double derivativeSignal;
 int turnSpeedStuck = 39;
 int multiplier[320];
+bool lineLeftSideVertical = false;
+
+void turnLeft();
+void turnRight();
 
 
 int main()
@@ -87,6 +91,18 @@ int main()
        for(int i = 0; i < 320; i++){
                 multiplier[i] = i - 160;
        }
+       int leftNwp = 0;
+       for(int i = 0; i < 240; i++){
+                valueVertical = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
+                if(valueVertical > threshold){ // change 70 to actual white line value later
+                        lineLeftSideVertical = true;
+                        leftNwp++;
+                }
+        }
+        if(leftNwp == 0){
+        	lineLeftSideVertical = false;
+        
+        }
        for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);//redline
             value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
@@ -108,7 +124,7 @@ int main()
         for(int i=0;i<320;i++){
             sumOfError  = sumOfError + multiplier[i]*white[i];
         }
-     if(nwp!=0&&nwp<=250){ // if it detects the line, the do the normal PID code
+     if(nwp!=0){ // if it detects the line, the do the normal PID code
        sumOfError =  sumOfError/nwp;
        proportionalSignal = sumOfError*kp;
        printf("sum of error*kp %d\n", sumOfError*kp);  
@@ -118,11 +134,12 @@ int main()
        set_motor(1, LM); 
        set_motor(2, RM); 
      }
-     else if(nwp==0){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
-     	deadEnd(); 
+     else if(nwp==0 && lineLeftSideVertical){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
+     	turnLeft();
+     	//deadEnd(); 
      }
-     else if(nwp > 200){ // crossroad condition
-     	crossRoad(); // might not need this anymore.
+     else if(nwp == 0 && !lineLeftSideVertical){ // crossroad condition
+     	turnRight();
      }
        // display picture
        update_screen();
@@ -224,3 +241,44 @@ unsigned long getTime(){
         return ((unsigned long) now.tv_sec * 1000 * 1000 + (unsigned long) now.tv_usec);  // combine sec and usec
 }
 
+void turnLeft(){
+	rotate = true;
+        while(rotate){
+                int valueStuck = 0;
+                take_picture(); // take camera shot
+                set_motor(1,-turnSpeedStuck);
+                set_motor(2,turnSpeedStuck);
+                //set_pixel(i, 55 ,255,0,0);//redline
+                for(int i = 0; i < 240; i++){
+                        valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
+                        if(valueStuck > 110){ // change 70 to actual white line value later
+                                rotate = false;
+                                stuck = 0;
+                        }
+                }
+                update_screen();
+                Sleep(0,40000);
+                //printf("%d\n",white[i]); // print array results
+        }
+}
+void turnRight(){
+	rotate = true;
+        while(rotate){
+                int valueStuck = 0;
+                take_picture(); // take camera shot
+                set_motor(1,turnSpeedStuck);
+                set_motor(2,-turnSpeedStuck);
+                //set_pixel(i, 55 ,255,0,0);//redline
+                for(int i = 0; i < 240; i++){
+                        valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
+                        if(valueStuck > 110){ // change 70 to actual white line value later
+                                rotate = false;
+                                stuck = 0;
+                                
+                        }
+                }
+                update_screen();
+                Sleep(0,40000);
+                //printf("%d\n",white[i]); // print array results
+        }
+}
