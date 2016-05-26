@@ -1,3 +1,4 @@
+#include <sys/time.h>
 #include <stdio.h>
 
 //#include <pthread.h>
@@ -38,6 +39,14 @@ int RM = 0;
 void crossRoad();
 void deadEnd();
 bool checkLine();
+unsigned long getTime();
+bool rotate = false;
+int stuck = 0;
+int threshold = 110;
+unsigned long lastTime;
+double lastError;
+double derivativeSignal;
+
 
 int main()
 {
@@ -74,9 +83,12 @@ int main()
        // we made the array 320 because that is the width of pixels
        // draw some line
        for(int i = 0; i < 320; i++){
+                multiplier[i] = i - 160;
+       }
+       for(int i = 0; i < 320; i++){
             set_pixel(i, 55 ,255,0,0);//redline
             value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
-            if(value > 110){ // change 70 to actual white line value later
+            if(value > threshold){ // change 70 to actual white line value later
                 white[i] = 1;
                 nwp++;
             }
@@ -92,7 +104,7 @@ int main()
         int proportionalSignal = 0;
         int sumOfError = 0;f
         for(int i=0;i<320;i++){
-            sumOfError  = sumOfError + (i - 160)*white[i];
+            sumOfError  = sumOfError + multiplier[i]*white[i];
         }
      if(nwp!=0&&nwp<=250){ // if it detects the line, the do the normal PID code
        sumOfError =  sumOfError/nwp;
@@ -149,6 +161,26 @@ void deadEnd(){
        		set_motor(2,-45);
                 Sleep(1,00000);
 	}
+	if (stuck == 7){
+                rotate = true;
+                while(rotate){
+                        int valueStuck = 0;
+                        take_picture(); // take camera shot
+                        set_motor(1,-turnSpeedStuck);
+                        set_motor(2,turnSpeedStuck);
+                        //set_pixel(i, 55 ,255,0,0);//redline
+                        for(int i = 0; i < 240; i++){
+                                valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
+                                if(valueStuck > 110){ // change 70 to actual white line value later
+                                        rotate = false;
+                                        stuck = 0;
+                                }
+                        }
+                        update_screen();
+                        Sleep(0,40000);
+                        //printf("%d\n",white[i]); // print array results
+                }
+        }
 }
 bool checkLine(){
 	int valueForCheck = 0; // intialise value
@@ -168,3 +200,25 @@ bool checkLine(){
 		return false;
 	}
 }
+
+	//double currentError = sumOfError;
+        //unsigned long currentTime = getTime();
+        //if (lastTime){
+        //derivativeSignal = kd*((lastError - currentError) / ( lastTime - currentTime));
+        //double test = ( lastTime - currentTime);
+        //printf("time %d\n", test);
+        //printf("Derivative L  %d\n", derivativeSignal);  
+        //}
+        //else{
+        //derivativeSignal = 0;
+        //printf("Derivative E  %d\n", derivativeSignal);  
+        //}
+        //lastError = currentError;
+        //lastTime = currentTime;
+
+unsigned long getTime(){
+        struct timeval now;
+        gettimeofday(&now, NULL);       
+        return ((unsigned long) now.tv_sec * 1000 * 1000 + (unsigned long) now.tv_usec);  // combine sec and usec
+}
+
