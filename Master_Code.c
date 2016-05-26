@@ -46,6 +46,8 @@ int threshold = 110;
 unsigned long lastTime;
 double lastError;
 double derivativeSignal;
+int turnSpeedStuck = 39;
+int multiplier[320];
 
 
 int main()
@@ -102,7 +104,7 @@ int main()
         //process the data collected so far:
         //
         int proportionalSignal = 0;
-        int sumOfError = 0;f
+        int sumOfError = 0;
         for(int i=0;i<320;i++){
             sumOfError  = sumOfError + multiplier[i]*white[i];
         }
