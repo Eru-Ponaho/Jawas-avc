@@ -93,7 +93,7 @@ int main()
        }
        int leftNwp = 0;
        for(int i = 0; i < 240; i++){
-                valueVertical = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
+                valueVertical = get_pixel(20,i,3); // give each pixel in the array the pixel value of its $
                 if(valueVertical > threshold){ // change 70 to actual white line value later
                         lineLeftSideVertical = true;
                         leftNwp++;
@@ -134,12 +134,14 @@ int main()
        set_motor(1, LM); 
        set_motor(2, RM); 
      }
-     else if(nwp==0 && lineLeftSideVertical){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
-     	turnLeft();
+     else if(nwp==0){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
+     	if(lineLeftSideVertical){
+     		turnLeft();
+     	}
+     	else{
+     		turnRight();
+     	}
      	//deadEnd(); 
-     }
-     else if(nwp == 0 && !lineLeftSideVertical){ // crossroad condition
-     	turnRight();
      }
        // display picture
        update_screen();
@@ -251,9 +253,8 @@ void turnLeft(){
                 //set_pixel(i, 55 ,255,0,0);//redline
                 for(int i = 0; i < 240; i++){
                         valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
-                        if(valueStuck > 110){ // change 70 to actual white line value later
+                        if(valueStuck > threshold){ // change 70 to actual white line value later
                                 rotate = false;
-                                stuck = 0;
                         }
                 }
                 update_screen();
@@ -271,10 +272,8 @@ void turnRight(){
                 //set_pixel(i, 55 ,255,0,0);//redline
                 for(int i = 0; i < 240; i++){
                         valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
-                        if(valueStuck > 110){ // change 70 to actual white line value later
+                        if(valueStuck > threshold){ // change 70 to actual white line value later
                                 rotate = false;
-                                stuck = 0;
-                                
                         }
                 }
                 update_screen();
