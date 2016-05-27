@@ -72,7 +72,7 @@ int main()
     float kp = 0.3; //p constant
     init(0);
     // connect camera to the screen
-    //open_screen_stream();
+    open_screen_stream();
     // set all didgital outputs to +5V
     for (i = 0; i < 8; i++)
     {
@@ -94,28 +94,28 @@ int main()
        int leftNwp = 0;
 	int rightNwp = 0;
        for(int i = 0; i < 240; i++){
-                int valueVertical = get_pixel(60,i,3); // give each pixel in the array the pixel value of its $
+                int valueVertical = get_pixel(0,i,3); // give each pixel in the array the pixel value of its $
                 if(valueVertical > threshold){ // change 70 to actual white line value later
                         leftNwp++;
                 }
        }
-/*
+
 	for(int i = 0; i < 240; i++){
-                int valueVertical = get_pixel(260,i,3); // give each pixel in the array the pixel value of its $
+                int valueVertical = get_pixel(320,i,3); // give each pixel in the array the pixel value of its $
                 if(valueVertical > threshold){ // change 70 to actual white line value later
                         rightNwp++;
                 }
        }
-*/
-//true is left
-// false is right
+
+//true is right
+// false is left
         if(leftNwp >0){ //was != 0
-		lineLeftSideVertical = true;
-        }
-	else{ //was == 0
 		lineLeftSideVertical = false;
+        }
+	else { //was == 0	
+		lineLeftSideVertical = true;
 	}
-//	if(leftNwp == 0 && rightNwp !=0){
+//	else if(leftNwp != 0 && rightNwp !=0){
 //		lineLeftSideVertical = false;
 //	}
         
@@ -154,14 +154,16 @@ int main()
      else if(nwp==0){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
      		if(lineLeftSideVertical){
      			turnLeft();
+			printf("turn left\n");
      		}
      		else{
+			printf("turn right\n");
      			turnRight();
      		}
      	//deadEnd(); 
      	}
-       // display picture
-       //update_screen();
+        //display picture
+       update_screen();
 	
        Sleep(0,1000);
        for (i = 0 ; i < 8; i++)
@@ -264,7 +266,7 @@ unsigned long getTime(){
 void turnLeft(){
 	set_motor(1,baseSpeed);
 	set_motor(2,baseSpeed);
-	Sleep(0,90000);
+	//Sleep(0,95000);
 	rotate = true;
         while(rotate){
                 int valueStuck = 0;
@@ -282,7 +284,7 @@ void turnLeft(){
 		//	}	rotate = false;
           //      }
                 update_screen();
-                Sleep(0,40000);
+                //Sleep(0,40000);
 		//lineLeftSideVertical = false;
                 //printf("%d\n",white[i]); // print array results
         }
@@ -290,7 +292,7 @@ void turnLeft(){
 void turnRight(){
 	set_motor(1,baseSpeed);
         set_motor(2,baseSpeed);
-        Sleep(0,90000);
+        //Sleep(1,000000);
 	rotate = true;
         while(rotate){
                 int valueStuck = 0;
@@ -305,7 +307,7 @@ void turnRight(){
                         }
                 //}
                 update_screen();
-                Sleep(0,40000);
+                //Sleep(1,000000);
 		//lineLeftSideVertical = true;
                 //printf("%d\n",white[i]); // print array results
         }
