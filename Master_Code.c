@@ -109,11 +109,16 @@ int main()
 
 //true is right
 // false is left
-        if(leftNwp >0){ //was != 0
-		lineLeftSideVertical = false;
+        if(leftNwp ==0){ //was != 0
+		lineLeftSideVertical = true;
         }
 	else { //was == 0	
-		lineLeftSideVertical = true;
+		if (rightNwp >  0){
+			lineLeftSideVertical = false;
+		}
+		else {
+			lineLeftSideVertical = true;
+		}
 	}
 //	else if(leftNwp != 0 && rightNwp !=0){
 //		lineLeftSideVertical = false;
