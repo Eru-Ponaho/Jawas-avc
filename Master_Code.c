@@ -107,10 +107,10 @@ int main()
        }
 //true is left
 // false is right
-        if(leftNwp !=0){
+        if(leftNwp >= 10){   //was !=0 Considering changing this value of 10
 		lineLeftSideVertical = true;
         }
-	if(leftNwp == 0){
+	if(leftNwp < 10){ // was == 0. 
 		lineLeftSideVertical = false;
 	}
 //	if(leftNwp == 0 && rightNwp !=0){
