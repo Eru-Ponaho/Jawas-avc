@@ -33,6 +33,7 @@ extern "C" int connect_to_server( char server_addr[15],int port);
 extern "C" int send_to_server(char message[24]);
 extern "C" int receive_from_server(char message[24]);
 
+int baseSpeed = 35;
 int reverseSpeed = -45;
 int LM = 0;
 int RM = 0;
@@ -68,7 +69,6 @@ int main()
     //receive_from_server(message); //this line looks buggy, is it right?
     //send_to_server(message);
     int i;
-    int baseSpeed = 35;
     float kp = 0.3; //p constant
     init(0);
     // connect camera to the screen
@@ -99,18 +99,20 @@ int main()
                         leftNwp++;
                 }
        }
+/*
 	for(int i = 0; i < 240; i++){
                 int valueVertical = get_pixel(260,i,3); // give each pixel in the array the pixel value of its $
                 if(valueVertical > threshold){ // change 70 to actual white line value later
                         rightNwp++;
                 }
        }
+*/
 //true is left
 // false is right
-        if(leftNwp >= 10){   //was !=0 Considering changing this value of 10
+        if(leftNwp >0){ //was != 0
 		lineLeftSideVertical = true;
         }
-	if(leftNwp < 10){ // was == 0. 
+	else{ //was == 0
 		lineLeftSideVertical = false;
 	}
 //	if(leftNwp == 0 && rightNwp !=0){
@@ -119,7 +121,7 @@ int main()
         
        for(int i = 0; i < 320; i++){
             //set_pixel(i, 55 ,255,0,0);//redline
-            value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
+            value = get_pixel(i,120,3); // give each pixel in the array the pixel value of its $
             if(value > threshold){ // change 70 to actual white line value later
                 white[i] = 1;
                 nwp++;
@@ -208,7 +210,7 @@ void deadEnd(){
                         //set_pixel(i, 55 ,255,0,0);//redline
                         for(int i = 0; i < 240; i++){
                                 valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
-                                if(valueStuck > 110){ // change 70 to actual white line value later
+                                if(valueStuck > threshold){ // change 70 to actual white line value later       changed number 110 to threshold variable
                                         rotate = false;
                                         stuck = 0;
                                 }
@@ -226,7 +228,7 @@ bool checkLine(){
        for(int i = 0; i < 320; i++){ //320 because its the camera pixel width
             set_pixel(i, 55 ,255,0,0); //redline
             valueForCheck = get_pixel(i,56,3); //set values of pixel
-            if(valueForCheck > 100){  //checks for how many white pixels there are in its current position (after reversing)
+            if(valueForCheck > threshold){  //checks for how many white pixels there are in its current position (after reversing)      Changed the value 100 to the 'Threshold' variable
                  nwpForCheck++;
             }
         }
@@ -260,6 +262,9 @@ unsigned long getTime(){
 }
 
 void turnLeft(){
+	set_motor(1,baseSpeed);
+	set_motor(2,baseSpeed);
+	Sleep(0,90000);
 	rotate = true;
         while(rotate){
                 int valueStuck = 0;
@@ -268,7 +273,7 @@ void turnLeft(){
                 set_motor(2,turnSpeedStuck*1.2);
                 //set_pixel(i, 55 ,255,0,0);//redline
 	//	for(int i = 0; i < 240; i++){
-                        valueStuck = get_pixel(100,20,3); // give each pixel in the array the pixel value of its $
+                        valueStuck = get_pixel(160,5,3); // give each pixel in the array the pixel value of its $
                         if(valueStuck > threshold){ // change 70 to actual white line value later
                                 rotate = false;
                         }
@@ -283,15 +288,18 @@ void turnLeft(){
         }
 }
 void turnRight(){
+	set_motor(1,baseSpeed);
+        set_motor(2,baseSpeed);
+        Sleep(0,90000);
 	rotate = true;
         while(rotate){
                 int valueStuck = 0;
                 take_picture(); // take camera shot
                 set_motor(1,turnSpeedStuck);
                 set_motor(2,-turnSpeedStuck*1.2);
-                //set_pixel(i, 55 ,255,0,0);//redline
-		//for(int i = 0; i < 240; i++){
-                        valueStuck = get_pixel(220,20,3); // give each pixel in the array the pixel value of its $
+                //for(int i = 0; i < 240; i++){
+//		Sleep(0,40000);
+                        valueStuck = get_pixel(160,5,3); // give each pixel in the array the pixel value of its $
                         if(valueStuck > threshold){ // change 70 to actual white line value later
                                 rotate = false;
                         }
