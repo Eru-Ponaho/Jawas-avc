@@ -42,11 +42,11 @@ bool checkLine();
 unsigned long getTime();
 bool rotate = false;
 int stuck = 0;
-int threshold = 110;
+int threshold = 100;
 unsigned long lastTime;
 double lastError;
 double derivativeSignal;
-int turnSpeedStuck = 39;
+int turnSpeedStuck = 50;
 int multiplier[320];
 bool lineLeftSideVertical = false;
 
@@ -59,7 +59,7 @@ int main()
 
     //Open gate:
     //connects to server
-   // connect_to_server("130.195.6.196", 1024);
+   //connect_to_server("130.195.6.196", 1024);
    //sends a message to the connected server
     //send_to_server("Please");
     //send_to_server("123456");
@@ -68,11 +68,11 @@ int main()
     //receive_from_server(message); //this line looks buggy, is it right?
     //send_to_server(message);
     int i;
-    int baseSpeed = 29;
+    int baseSpeed = 35;
     float kp = 0.3; //p constant
     init(0);
     // connect camera to the screen
-    open_screen_stream();
+    //open_screen_stream();
     // set all didgital outputs to +5V
     for (i = 0; i < 8; i++)
     {
@@ -92,19 +92,33 @@ int main()
                 multiplier[i] = i - 160;
        }
        int leftNwp = 0;
+	int rightNwp = 0;
        for(int i = 0; i < 240; i++){
-                valueVertical = get_pixel(20,i,3); // give each pixel in the array the pixel value of its $
+                int valueVertical = get_pixel(60,i,3); // give each pixel in the array the pixel value of its $
                 if(valueVertical > threshold){ // change 70 to actual white line value later
-                        lineLeftSideVertical = true;
                         leftNwp++;
                 }
+       }
+	for(int i = 0; i < 240; i++){
+                int valueVertical = get_pixel(260,i,3); // give each pixel in the array the pixel value of its $
+                if(valueVertical > threshold){ // change 70 to actual white line value later
+                        rightNwp++;
+                }
+       }
+//true is left
+// false is right
+        if(leftNwp !=0){
+		lineLeftSideVertical = true;
         }
-        if(leftNwp == 0){
-        	lineLeftSideVertical = false;
+	if(leftNwp == 0){
+		lineLeftSideVertical = false;
+	}
+//	if(leftNwp == 0 && rightNwp !=0){
+//		lineLeftSideVertical = false;
+//	}
         
-        }
        for(int i = 0; i < 320; i++){
-            set_pixel(i, 55 ,255,0,0);//redline
+            //set_pixel(i, 55 ,255,0,0);//redline
             value = get_pixel(i,56,3); // give each pixel in the array the pixel value of its $
             if(value > threshold){ // change 70 to actual white line value later
                 white[i] = 1;
@@ -127,25 +141,27 @@ int main()
      if(nwp!=0){ // if it detects the line, the do the normal PID code
        sumOfError =  sumOfError/nwp;
        proportionalSignal = sumOfError*kp;
-       printf("sum of error*kp %d\n", sumOfError*kp);  
+       //printf("RM %d\n", RM);  
        LM = baseSpeed + (proportionalSignal);
        RM = baseSpeed + (-1*(proportionalSignal));
-       printf("%d\n",LM);
-       set_motor(1, LM); 
-       set_motor(2, RM); 
+       //printf("RM %d\n", RM);  
+	//printf("LM %f\n",LM);
+       set_motor(1, RM); 
+       set_motor(2, LM); 
      }
      else if(nwp==0){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
-     	if(lineLeftSideVertical){
-     		turnLeft();
-     	}
-     	else{
-     		turnRight();
-     	}
+     		if(lineLeftSideVertical){
+     			turnLeft();
+     		}
+     		else{
+     			turnRight();
+     		}
      	//deadEnd(); 
-     }
+     	}
        // display picture
-       update_screen();
-       Sleep(0,80000);
+       //update_screen();
+	
+       Sleep(0,1000);
        for (i = 0 ; i < 8; i++)
        {
        int av = read_analog(i);
@@ -153,7 +169,7 @@ int main()
        }
      }
    // terminate hardware
-    close_screen_stream();
+   // close_screen_stream();
     set_motor(1,0);
     set_motor(2,0);
   
@@ -179,7 +195,7 @@ void deadEnd(){
         //checkLine();
         if (checkLine()){ // it calls the checkLine() method and if it returns true, turn left. If it isnt, then proceed to normal PID
 		set_motor(1,45); 
-       		set_motor(2,-45);
+       		set_motor(2,-45*1.2);
                 Sleep(1,00000);
 	}
 	if (stuck == 7){
@@ -249,16 +265,20 @@ void turnLeft(){
                 int valueStuck = 0;
                 take_picture(); // take camera shot
                 set_motor(1,-turnSpeedStuck);
-                set_motor(2,turnSpeedStuck);
+                set_motor(2,turnSpeedStuck*1.2);
                 //set_pixel(i, 55 ,255,0,0);//redline
-                for(int i = 0; i < 240; i++){
-                        valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
+	//	for(int i = 0; i < 240; i++){
+                        valueStuck = get_pixel(100,20,3); // give each pixel in the array the pixel value of its $
                         if(valueStuck > threshold){ // change 70 to actual white line value later
                                 rotate = false;
                         }
-                }
+		//	else{
+		//		turnRight();
+		//	}	rotate = false;
+          //      }
                 update_screen();
                 Sleep(0,40000);
+		//lineLeftSideVertical = false;
                 //printf("%d\n",white[i]); // print array results
         }
 }
@@ -268,16 +288,18 @@ void turnRight(){
                 int valueStuck = 0;
                 take_picture(); // take camera shot
                 set_motor(1,turnSpeedStuck);
-                set_motor(2,-turnSpeedStuck);
+                set_motor(2,-turnSpeedStuck*1.2);
                 //set_pixel(i, 55 ,255,0,0);//redline
-                for(int i = 0; i < 240; i++){
-                        valueStuck = get_pixel(160,i,3); // give each pixel in the array the pixel value of its $
+		//for(int i = 0; i < 240; i++){
+                        valueStuck = get_pixel(220,20,3); // give each pixel in the array the pixel value of its $
                         if(valueStuck > threshold){ // change 70 to actual white line value later
                                 rotate = false;
                         }
-                }
+                //}
                 update_screen();
                 Sleep(0,40000);
+		//lineLeftSideVertical = true;
                 //printf("%d\n",white[i]); // print array results
         }
 }
+
