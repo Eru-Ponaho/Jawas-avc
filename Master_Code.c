@@ -33,7 +33,7 @@ extern "C" int connect_to_server( char server_addr[15],int port);
 extern "C" int send_to_server(char message[24]);
 extern "C" int receive_from_server(char message[24]);
 
-int baseSpeed = 35;
+int baseSpeed = 35; //with 40, can still complete B+ but osiclates heaviliy and doesnt seem reliable
 int reverseSpeed = -45;
 int LM = 0;
 int RM = 0;
@@ -60,14 +60,14 @@ int main()
 
     //Open gate:
     //connects to server
-   //connect_to_server("130.195.6.196", 1024);
+   connect_to_server("130.195.6.196", 1024);
    //sends a message to the connected server
-    //send_to_server("Please");
+    send_to_server("Please");
     //send_to_server("123456");
     //receives message from the connected server
-    //char message[24];
-    //receive_from_server(message); //this line looks buggy, is it right?
-    //send_to_server(message);
+    char message[24];
+    receive_from_server(message); //this line looks buggy, is it right?
+    send_to_server(message);
     int i;
     float kp = 0.3; //p constant
     init(0);
@@ -94,39 +94,37 @@ int main()
        int leftNwp = 0;
 	int rightNwp = 0;
        for(int i = 0; i < 240; i++){
-                int valueVertical = get_pixel(0,i,3); // give each pixel in the array the pixel value of its $
+                int valueVertical = get_pixel(300,i,3); // give each pixel in the array the pixel value of its $
                 if(valueVertical > threshold){ // change 70 to actual white line value later
                         leftNwp++;
                 }
        }
 
-	for(int i = 0; i < 240; i++){
-                int valueVertical = get_pixel(320,i,3); // give each pixel in the array the pixel value of its $
-                if(valueVertical > threshold){ // change 70 to actual white line value later
-                        rightNwp++;
-                }
-       }
+	//for(int i = 0; i < 240; i++){
+          //      int valueVertical = get_pixel(320,i,3); // give each pixel in the array the pixel value of its $
+            //    if(valueVertical > threshold){ // change 70 to actual white line value later
+                   //     rightNwp++;
+              //  }
+      // }
 
 //true is right
 // false is left
-        if(leftNwp ==0){ //was != 0
+	if(leftNwp >0){ //&&rightnwpp>0
 		lineLeftSideVertical = true;
         }
-	else { //was == 0	
-		if (rightNwp >  0){
-			lineLeftSideVertical = false;
-		}
-		else {
-			lineLeftSideVertical = true;
-		}
+	else{
+		lineLeftSideVertical = false;
 	}
-//	else if(leftNwp != 0 && rightNwp !=0){
+//	else if (leftNwp > 0 && rightNwp == 0){ //was == 0	
 //		lineLeftSideVertical = false;
+//	}
+//	else if(leftNwp == 0 && rightNwp >0){
+//		lineLeftSideVertical = true;
 //	}
         
        for(int i = 0; i < 320; i++){
             //set_pixel(i, 55 ,255,0,0);//redline
-            value = get_pixel(i,120,3); // give each pixel in the array the pixel value of its $
+            value = get_pixel(i,130,3); // give each pixel in the array the pixel value of its $
             if(value > threshold){ // change 70 to actual white line value later
                 white[i] = 1;
                 nwp++;
