@@ -50,26 +50,37 @@ double derivativeSignal;
 int turnSpeedStuck = 50;
 int multiplier[320];
 bool lineLeftSideVertical = false;
-
+int left;//ir
+int right;//ir
 void turnLeft();
 void turnRight();
+int irError;
+int irProportionalSignal;
+int r;
+int g;
+int b;
+bool wall = false;
+float kp = 0.3;//proportionalSignalConstant
 
 
 int main()
 {
-
-    //Open gate:
-    //connects to server
-   connect_to_server("130.195.6.196", 1024);
+//===========================Gate Code===========================================
+/* 
+   //Open gate:
+   //connects to server
+    connect_to_server("130.195.6.196", 1024);
    //sends a message to the connected server
-    send_to_server("Please");
-    //send_to_server("123456");
+     send_to_server("Please");
     //receives message from the connected server
     char message[24];
-    receive_from_server(message); //this line looks buggy, is it right?
+    receive_from_server(message);
     send_to_server(message);
+*/
+//===========================Gate Code End===========================================
+
+//========================Initialise Hardware========================================
     int i;
-    float kp = 0.3; //p constant
     init(0);
     // connect camera to the screen
     open_screen_stream();
@@ -80,8 +91,16 @@ int main()
       select_IO(i,0);
       write_digital(i,1);
     }
-    while(1) // keep looping
-    {
+//========================Initialise Hardware End====================================
+
+//========================Line Following=============================================
+    while(!wall) // keep looping
+   {
+	int test = 1000-read_analog(0);
+	//printf("test %d\n",test);
+	if(!(test>700)){
+		wall = true;
+	}
        int nwp = 0; // keeps count of the number of white pixels in the picture taken
        take_picture();      // take camera shot
        int white[320]; // array for knowing which pixel is white or black.
@@ -107,21 +126,12 @@ int main()
               //  }
       // }
 
-//true is right
-// false is left
 	if(leftNwp >0){ //&&rightnwpp>0
 		lineLeftSideVertical = true;
         }
 	else{
 		lineLeftSideVertical = false;
 	}
-//	else if (leftNwp > 0 && rightNwp == 0){ //was == 0	
-//		lineLeftSideVertical = false;
-//	}
-//	else if(leftNwp == 0 && rightNwp >0){
-//		lineLeftSideVertical = true;
-//	}
-        
        for(int i = 0; i < 320; i++){
             //set_pixel(i, 55 ,255,0,0);//redline
             value = get_pixel(i,130,3); // give each pixel in the array the pixel value of its $
@@ -134,7 +144,19 @@ int main()
             }
             //printf("%d\n",white[i]); // print array results
         }
-         
+//===========red============
+/*
+        for(int i = 0; i < 320; i++){//rgb code
+            //set_pixel(i, 55 ,255,0,0);//redline
+            r = get_pixel(i,130,0); 
+	    g = get_pixel(i,130,1); 
+            b = get_pixel(i,130,2); 
+	        if((r > 270)&&(g<270&&b<270) ){ // change 70 to actual white line value later
+                	red = true;
+            }
+        }
+*/
+ //============red end============
  
         //process the data collected so far:
         //
@@ -156,11 +178,9 @@ int main()
      }
      else if(nwp==0){ // number of pixels being zero means it lose the line, so call the method for dealing with that situation
      		if(lineLeftSideVertical){
-     			turnLeft();
-			printf("turn left\n");
+			turnLeft();
      		}
      		else{
-			printf("turn right\n");
      			turnRight();
      		}
      	//deadEnd(); 
@@ -175,8 +195,28 @@ int main()
       // printf("ai=%d av=%d\n",i,av);
        }
      }
+//======================Line Following End==============================================================
    // terminate hardware
-   // close_screen_stream();
+//=======================Maze Code=======================================
+
+while(true){
+	irProportionalSignal = 0;
+	left = 1000 - read_analog(0);
+        right = 1000 - read_analog(1);
+        irError = left-right;
+        irProportionalSignal = irError*0.06;
+        printf("left sensor %d\n",left);
+        printf("right sensor %d\n",right);
+	LM = baseSpeed + (irProportionalSignal);
+        RM = baseSpeed + (-1*(irProportionalSignal));
+       //printf("RM %d\n", RM);  
+        //printf("LM %f\n",LM);
+        set_motor(1, RM); 
+        set_motor(2, LM); 
+
+
+}
+    close_screen_stream();
     set_motor(1,0);
     set_motor(2,0);
   
