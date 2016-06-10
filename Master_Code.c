@@ -66,7 +66,7 @@ float kp = 0.3;//proportionalSignalConstant
 int main()
 {
 //===========================Gate Code===========================================
-/* 
+
    //Open gate:
    //connects to server
     connect_to_server("130.195.6.196", 1024);
@@ -76,7 +76,7 @@ int main()
     char message[24];
     receive_from_server(message);
     send_to_server(message);
-*/
+
 //===========================Gate Code End===========================================
 
 //========================Initialise Hardware========================================
@@ -144,7 +144,7 @@ int main()
             }
             //printf("%d\n",white[i]); // print array results
         }
-//===========red============
+//===========red check============
 /*
         for(int i = 0; i < 320; i++){//rgb code
             //set_pixel(i, 55 ,255,0,0);//redline
@@ -156,7 +156,7 @@ int main()
             }
         }
 */
- //============red end============
+ //============red check end============
  
         //process the data collected so far:
         //
@@ -214,7 +214,7 @@ while(true){
         set_motor(1, RM); 
         set_motor(2, LM); 
 
-
+//================maze code end=======================================
 }
     close_screen_stream();
     set_motor(1,0);
@@ -224,15 +224,15 @@ while(true){
 
 
 }
-void crossRoad(){
+//not used void crossRoad(){
 	//set_motor(1,-35);
 	//set_motor(2,-35);
 	//Sleep(0,500000);
 	//set_motor(1,45);
 	//set_motor(2,-45);
 	//Sleep(1,000000);
-}
-void deadEnd(){
+//}
+/*not used void deadEnd(){
 	set_motor(1,reverseSpeed);
 	set_motor(2,reverseSpeed);
 	Sleep(0,500000);
@@ -264,9 +264,9 @@ void deadEnd(){
                         Sleep(0,40000);
                         //printf("%d\n",white[i]); // print array results
                 }
-        }
-}
-bool checkLine(){
+       }
+}*/
+/*not used bool checkLine(){
 	int valueForCheck = 0; // intialise value
         int nwpForCheck = 0; // intialise number of pixels of check after reversing.
         take_picture();
@@ -283,7 +283,7 @@ bool checkLine(){
 	else{
 		return false;
 	}
-}
+}*/
 
 	//double currentError = sumOfError;
         //unsigned long currentTime = getTime();
@@ -300,11 +300,11 @@ bool checkLine(){
         //lastError = currentError;
         //lastTime = currentTime;
 
-unsigned long getTime(){
+/* not usedunsigned long getTime(){
         struct timeval now;
         gettimeofday(&now, NULL);       
         return ((unsigned long) now.tv_sec * 1000 * 1000 + (unsigned long) now.tv_usec);  // combine sec and usec
-}
+}*/
 
 void turnLeft(){
 	set_motor(1,baseSpeed);
@@ -318,8 +318,8 @@ void turnLeft(){
                 set_motor(2,turnSpeedStuck*1.2);
                 //set_pixel(i, 55 ,255,0,0);//redline
 	//	for(int i = 0; i < 240; i++){
-                        valueStuck = get_pixel(160,5,3); // give each pixel in the array the pixel value of its $
-                        if(valueStuck > threshold){ // change 70 to actual white line value later
+                        valueStuck = get_pixel(160,5,3); //keeps turning left until finds line
+                        if(valueStuck > threshold){
                                 rotate = false;
                         }
 		//	else{
@@ -344,7 +344,7 @@ void turnRight(){
                 set_motor(2,-turnSpeedStuck*1.2);
                 //for(int i = 0; i < 240; i++){
 //		Sleep(0,40000);
-                        valueStuck = get_pixel(160,5,3); // give each pixel in the array the pixel value of its $
+                        valueStuck = get_pixel(160,5,3); // keeps turning right until line found
                         if(valueStuck > threshold){ // change 70 to actual white line value later
                                 rotate = false;
                         }
