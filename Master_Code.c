@@ -65,7 +65,7 @@ float kp = 0.3;//proportionalSignalConstant
 
 int main()
 {
-//===========================Gate Code===========================================
+//===========================Network Gate Code===========================================
 
    //Open gate:
    //connects to server
@@ -77,7 +77,7 @@ int main()
     receive_from_server(message);
     send_to_server(message);
 
-//===========================Gate Code End===========================================
+//=========================== Network Gate Code End===========================================
 
 //========================Initialise Hardware========================================
     int i;
